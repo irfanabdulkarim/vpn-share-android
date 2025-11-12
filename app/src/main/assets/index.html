@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VPN Share App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#135bec",
+        "background-light": "#f6f6f8",
+        "background-dark": "#101622",
+      },
+      fontFamily: {
+        "display": ["Space Grotesk"]
+      },
+      borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+    },
+  },
+}
+</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.screen { display: none; }
+.screen.active { display: flex; }
+body { min-height: 100vh; }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+
+<!-- Welcome Screen -->
+<div id="welcome" class="screen active min-h-screen w-full flex-col">
+  <div class="flex flex-col justify-between flex-grow">
+    <div class="flex-grow flex flex-col items-center justify-center p-4">
+      <div class="w-full max-w-sm">
+        <div class="w-full bg-center bg-no-repeat bg-contain flex flex-col justify-end overflow-hidden min-h-80" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBM6n-NuPyS7uh0cNXtnJvT_JBrUqdZOJoB2C5xv7yOpQbwcDzAmB6hladGtxsAVru3b_dTofrplGyU31vBt_0QRteemJ9Lu1xqF3osYdvF3rkNiSRVu1sZMwcam7h_q5nRAclQTk2x_xT7TCIOsd_2yHhZy50tI7StpitRes2m8Q2heJbPgU4pGM4voYMuKHB37L3jcPV75nwxT6Ak2_ahcoqZqv_UWy003MfLh_xEcu_QHff5poj3hi-ze0UC0xGmfB7zrMk_uYQ");'></div>
+      </div>
+      <h1 class="text-slate-900 dark:text-white text-[32px] font-bold text-center pb-3 pt-6 max-w-md">Share Your Connection, Securely.</h1>
+      <p class="text-slate-600 dark:text-slate-300 text-base text-center max-w-md">Easily create a secure network to share internet access between your devices.</p>
+    </div>
+    <div class="px-4 py-6">
+      <div class="flex w-full justify-center gap-3 py-5">
+        <div class="h-2 w-2 rounded-full bg-primary"></div>
+        <div class="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+        <div class="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+      </div>
+      <button onclick="navigate('login')" class="w-full rounded-lg h-12 bg-primary text-white text-base font-bold">Get Started</button>
+    </div>
+  </div>
+</div>
+
+<!-- Login Screen -->
+<div id="login" class="screen min-h-screen w-full flex-col">
+  <div class="w-full grow flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-md flex flex-col items-center gap-6">
+      <div class="flex flex-col items-center gap-2">
+        <div class="bg-primary flex h-16 w-16 items-center justify-center rounded-2xl text-white">
+          <span class="material-symbols-outlined !text-4xl">shield_lock</span>
+        </div>
+        <h1 class="text-slate-900 dark:text-white text-3xl font-bold text-center">Secure Your Connection</h1>
+      </div>
+      <div class="w-full flex flex-col gap-4">
+        <input class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/50 h-14 px-4 text-slate-900 dark:text-white placeholder:text-slate-500" placeholder="Email or Username"/>
+        <input type="password" class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/50 h-14 px-4 text-slate-900 dark:text-white placeholder:text-slate-500" placeholder="Password"/>
+        <a onclick="navigate('forgot')" class="text-primary text-sm text-right cursor-pointer">Forgot Password?</a>
+        <button onclick="navigate('client')" class="w-full h-14 rounded-lg bg-primary text-white font-bold">Login</button>
+      </div>
+      <p class="text-slate-600 dark:text-slate-400 text-sm">Don't have an account? <a onclick="navigate('signup')" class="text-primary font-bold cursor-pointer">Sign Up</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Forgot Password Screen -->
+<div id="forgot" class="screen min-h-screen w-full flex-col">
+  <div class="flex flex-col h-full">
+    <div class="flex items-center p-4 pb-2">
+      <div onclick="navigate('login')" class="flex size-12 items-center justify-start cursor-pointer">
+        <span class="material-symbols-outlined text-white/90 text-2xl">arrow_back</span>
+      </div>
+    </div>
+    <div class="flex flex-col flex-grow px-4 pt-6 pb-8">
+      <main class="flex-grow">
+        <h1 class="text-white text-[32px] font-bold pb-2">Forgot Password</h1>
+        <p class="text-white/70 text-base pb-8">Enter your email to receive a password reset link.</p>
+        <input class="w-full rounded-xl border border-white/20 bg-white/5 h-14 px-4 text-white/90 placeholder:text-white/40" placeholder="Enter your email"/>
+      </main>
+      <button onclick="navigate('forgot-check')" class="w-full h-14 rounded-xl bg-primary text-white font-bold mt-6">Send Reset Link</button>
+    </div>
+  </div>
+</div>
+
+<!-- Check Email Screen -->
+<div id="forgot-check" class="screen min-h-screen w-full flex-col">
+  <div class="flex items-center p-4 pb-2">
+    <div onclick="navigate('login')" class="flex size-12 items-center cursor-pointer">
+      <span class="material-symbols-outlined text-slate-800 dark:text-white text-2xl">arrow_back</span>
+    </div>
+  </div>
+  <div class="flex flex-col items-center justify-center flex-grow p-4 text-center">
+    <div class="flex items-center justify-center bg-primary/10 w-24 h-24 rounded-full mb-8">
+      <span class="material-symbols-outlined text-primary text-4xl">mark_email_read</span>
+    </div>
+    <h2 class="text-slate-900 dark:text-white text-[28px] font-bold pb-3">Check Your Inbox</h2>
+    <p class="text-slate-600 dark:text-slate-300 text-base max-w-sm">We have sent a password reset link to your email address.</p>
+  </div>
+  <div class="p-4 mt-auto">
+    <button onclick="navigate('login')" class="w-full rounded-lg bg-primary px-4 py-3.5 text-base font-bold text-white">Return to Login</button>
+  </div>
+</div>
+
+<!-- Client Mode Screen -->
+<div id="client" class="screen min-h-screen w-full flex-col">
+  <div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0">
+    <div onclick="navigate('login')" class="text-slate-800 dark:text-white flex size-12 items-center cursor-pointer">
+      <span class="material-symbols-outlined text-2xl">arrow_back</span>
+    </div>
+    <h2 class="text-slate-900 dark:text-white text-lg font-bold flex-1 text-center pr-12">VPN Connection</h2>
+  </div>
+  <main class="flex-grow flex flex-col items-center px-4 py-8">
+    <div class="w-full max-w-sm flex flex-col items-center space-y-8">
+      <button class="flex items-center justify-center w-48 h-48 rounded-full bg-slate-200 dark:bg-slate-800/50 shadow-lg">
+        <span class="material-symbols-outlined text-7xl text-slate-500 dark:text-slate-400">power_settings_new</span>
+      </button>
+      <div class="text-center">
+        <h1 class="text-slate-900 dark:text-white text-[32px] font-bold">Status: Disconnected</h1>
+        <p class="text-slate-500 dark:text-slate-400 text-base pt-1">Enter a server ID to get started</p>
+      </div>
+      <div class="w-full">
+        <p class="text-slate-900 dark:text-white text-base font-medium pb-2">Enter Server ID</p>
+        <input class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 h-14 px-4 text-slate-900 dark:text-white placeholder:text-slate-400" placeholder="Enter Server ID"/>
+      </div>
+    </div>
+  </main>
+  <div class="px-4 py-6 mt-auto w-full max-w-sm mx-auto space-y-3">
+    <button onclick="navigate('server')" class="flex w-full items-center justify-center rounded-xl h-12 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-white text-base font-bold gap-2">
+      <span class="material-symbols-outlined text-xl">swap_horiz</span>
+      Switch to Server Mode
+    </button>
+    <button onclick="navigate('settings')" class="flex w-full items-center justify-center rounded-xl h-12 bg-transparent text-slate-500 dark:text-slate-400 text-base font-bold gap-2">
+      <span class="material-symbols-outlined text-xl">settings</span>
+      Settings
+    </button>
+  </div>
+</div>
+
+<!-- Server Mode Screen -->
+<div id="server" class="screen min-h-screen w-full flex-col">
+  <div class="flex items-center p-4">
+    <div onclick="navigate('client')" class="flex size-12 items-center cursor-pointer">
+      <span class="material-symbols-outlined text-slate-800 dark:text-white text-3xl">arrow_back</span>
+    </div>
+    <h1 class="flex-1 text-center text-xl font-bold text-slate-900 dark:text-white">Server Mode</h1>
+    <div onclick="navigate('settings')" class="flex w-12 items-center justify-end cursor-pointer">
+      <span class="material-symbols-outlined text-slate-800 dark:text-white text-3xl">settings</span>
+    </div>
+  </div>
+  <div class="flex flex-1 flex-col justify-between p-4 pt-0">
+    <div class="space-y-6">
+      <div class="rounded-xl bg-white dark:bg-slate-800 p-4 shadow-md">
+        <p class="text-sm text-slate-500 dark:text-slate-400">Your Server ID</p>
+        <p class="text-xl font-bold text-slate-900 dark:text-white">AX47-B2C9-8F2D-E1A0</p>
+        <button class="mt-2 rounded-lg h-9 px-4 bg-primary/20 text-primary text-sm font-bold">Copy</button>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="rounded-xl bg-white dark:bg-slate-800 p-3 shadow-md text-center">
+          <p class="text-sm text-slate-500 dark:text-slate-400">Status</p>
+          <p class="pt-1 font-bold text-green-500">Online</p>
+        </div>
+        <div class="rounded-xl bg-white dark:bg-slate-800 p-3 shadow-md text-center">
+          <p class="text-sm text-slate-500 dark:text-slate-400">Clients</p>
+          <p class="pt-1 font-bold text-slate-900 dark:text-white">2</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center justify-center py-10">
+      <button class="flex size-40 flex-col items-center justify-center rounded-full bg-primary text-white shadow-lg">
+        <span class="material-symbols-outlined text-6xl">power_settings_new</span>
+        <span class="text-xl font-bold">Stop</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Screen -->
+<div id="settings" class="screen min-h-screen w-full flex-col">
+  <div class="flex items-center p-4 pb-2 justify-between sticky top-0">
+    <div onclick="history.back()" class="text-slate-900 dark:text-white flex size-12 items-center cursor-pointer">
+      <span class="material-symbols-outlined text-2xl">arrow_back</span>
+    </div>
+    <h2 class="text-slate-900 dark:text-white text-lg font-bold flex-1 text-center">Settings</h2>
+    <div class="flex size-12"></div>
+  </div>
+  <div class="px-4 pt-4">
+    <div class="flex items-center gap-4 bg-white dark:bg-[#1C2333] p-4 rounded-xl">
+      <div class="bg-primary flex h-14 w-14 items-center justify-center rounded-full text-white">
+        <span class="material-symbols-outlined text-2xl">person</span>
+      </div>
+      <div>
+        <p class="text-slate-900 dark:text-white text-base font-medium">John Doe</p>
+        <p class="text-slate-500 dark:text-slate-400 text-sm">ID: 123-456-789</p>
+      </div>
+    </div>
+  </div>
+  <h3 class="text-slate-900 dark:text-white text-lg font-bold px-5 pb-2 pt-6">Preferences</h3>
+  <div class="flex flex-col bg-white dark:bg-[#1C2333] rounded-xl mx-4">
+    <div class="flex items-center gap-4 px-4 min-h-14 justify-between border-b border-slate-200 dark:border-slate-700">
+      <div class="flex items-center gap-4">
+        <span class="material-symbols-outlined text-slate-500 dark:text-slate-400">dark_mode</span>
+        <p class="text-slate-900 dark:text-white">Dark Mode</p>
+      </div>
+      <label class="relative inline-flex cursor-pointer items-center">
+        <input checked class="peer sr-only" type="checkbox"/>
+        <div class="peer h-6 w-11 rounded-full bg-slate-200 dark:bg-slate-700 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all peer-checked:bg-primary peer-checked:after:translate-x-full"></div>
+      </label>
+    </div>
+    <div class="flex items-center gap-4 px-4 min-h-14 justify-between">
+      <div class="flex items-center gap-4">
+        <span class="material-symbols-outlined text-slate-500 dark:text-slate-400">notifications</span>
+        <p class="text-slate-900 dark:text-white">Notifications</p>
+      </div>
+      <label class="relative inline-flex cursor-pointer items-center">
+        <input checked class="peer sr-only" type="checkbox"/>
+        <div class="peer h-6 w-11 rounded-full bg-slate-200 dark:bg-slate-700 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all peer-checked:bg-primary peer-checked:after:translate-x-full"></div>
+      </label>
+    </div>
+  </div>
+  <div class="px-4 pt-8 pb-4">
+    <button onclick="navigate('login')" class="flex w-full items-center justify-center gap-2 rounded-xl bg-red-500/10 px-4 py-3 text-base font-medium text-red-500">
+      <span class="material-symbols-outlined">logout</span>
+      Logout
+    </button>
+  </div>
+</div>
+
+<script>
+const screens = ['welcome', 'login', 'signup', 'forgot', 'forgot-check', 'client', 'server', 'settings'];
+const history = [];
+
+function navigate(screenId) {
+  screens.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+  const target = document.getElementById(screenId);
+  if (target) {
+    target.classList.add('active');
+    history.push(screenId);
+    window.scrollTo(0, 0);
+  }
+}
+
+history.back = function() {
+  if (history.length > 1) {
+    history.pop();
+    navigate(history[history.length - 1]);
+  }
+}
+</script>
+
+</body>
+</html>
